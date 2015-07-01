@@ -1,4 +1,4 @@
-Web Scraper/CLI Utility to print and search phone extensions for your ogranization.
+Web scraper/CLI utility to print and search phone extensions for your ogranization.
 
 # Example Usage:
 
@@ -17,6 +17,8 @@ First Last 100
 # Configuration:
 configured via environment variables
 
+```
 export COMMPORTAL_USER=2031234567
 export COMMPORTAL_PASS=2222
+```
 
