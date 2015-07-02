@@ -12,8 +12,6 @@ import (
 	"os"
 	"regexp"
 	"strings"
-
-	"github.com/headzoo/surf"
 )
 
 type Config struct {
@@ -177,23 +175,27 @@ func init() {
 }
 
 func (c *Config) getSession() error {
-	bow := surf.NewBrowser()
 	// Create the Login Form
 	v := url.Values{}
 	v.Set("version", "8.1.04")
 	v.Add("ApplicationID", "MS_WebClient")
 	v.Add("ContextInfo", "version=8.1.04")
-	v.Add("UserType", "bgAdmin")
 	v.Add("DirectoryNumber", config.Username)
 	v.Add("Password", config.Password)
 	v.Encode()
 	// Post form
-	err := bow.PostForm("http://optimumlightpathvoice.com/login", v)
-	if err != nil || bow.StatusCode() != 200 {
+	resp, err := http.PostForm("http://optimumlightpathvoice.com/login", v)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	// resp should return something like session=SessionID
+	buf, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
 		return err
 	}
 	// Set the session in the config
-	c.Session = strings.Join(strings.Split(bow.Body(), "="), "")
+	c.Session = strings.Join(strings.Split(string(buf), "="), "")
 	return nil
 
 }
