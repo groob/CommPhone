@@ -17,8 +17,10 @@ First Last 100
 # Configuration:
 configured via environment variables
 
-```
+```bash
 export COMMPORTAL_USER=2031234567
 export COMMPORTAL_PASS=2222
+# don't add a trailing slash to the end of the url
+export COMMPORTAL_url=http://myloginurl
 ```
 
